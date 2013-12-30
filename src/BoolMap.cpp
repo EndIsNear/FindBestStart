@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 
 #include "BoolMap.h"
 
@@ -81,7 +82,27 @@ bool boolMap::fillRect(dot x, dot y)
     return true;
 }
 
-bool boolMap::fillMapFrimFile(const char* filePath)
+bool boolMap::fillMapFromFile(const char* filePath)
 {
+    dot a(0,0), b(0,0);
+    ifstream inFile(filePath);
+    if(!inFile)
+    {
+        cerr << "Cannot open the file - " << filePath << "!" << endl;
+        return false;
+    }
+    inFile >> this->width;
+    inFile >> this->heigth;
+    this->initMap(this->width, this->heigth);
+    while(!inFile.eof())
+    {
+        inFile >> a.x;
+        inFile >> a.y;
+        inFile >> b.x;
+        inFile >> b.y;
+        this->fillRect(a,b);
+    }
 
+
+    inFile.close();
 }

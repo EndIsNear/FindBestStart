@@ -16,7 +16,7 @@ public:
     void printMap();
     bool initMap(unsigned heigth, unsigned width);
     bool fillRect(dot x, dot y);
-    bool fillMapFrimFile(const char* filePath);
+    bool fillMapFromFile(const char* filePath);
 private:
     unsigned heigth;
     unsigned width;
