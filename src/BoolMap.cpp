@@ -73,8 +73,8 @@ bool boolMap::fillRect(dot x, dot y)
     {
         return false;
     }
-    for(int i = x.x; i <= y.x; i++)
-        for(int j = x.y; j <= y.y; j++)
+    for(unsigned i = x.x; i <= y.x; i++)
+        for(unsigned j = x.y; j <= y.y; j++)
         {
             this->map[i][j] = true;
         }
@@ -105,4 +105,5 @@ bool boolMap::fillMapFromFile(const char* filePath)
 
 
     inFile.close();
+    return true;
 }

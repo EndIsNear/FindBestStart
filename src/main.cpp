@@ -1,4 +1,5 @@
 #include <iostream>
+#include "list.h"
 
 #include "BoolMap.h"
 using namespace std;
