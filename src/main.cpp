@@ -1,6 +1,7 @@
 #include <iostream>
-#include "list.h"
+#include <cstdlib>
 
+#include "list.h"
 #include "BoolMap.h"
 using namespace std;
 
@@ -22,6 +23,8 @@ int main(int argc, char *argv[])
     boolMap test;
     test.fillMapFromFile(argv[1]);
     test.printMap();
+
+
 
     return 0;
 }
