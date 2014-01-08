@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "list.h"
+#include "graph.h"
 #include "BoolMap.h"
 using namespace std;
 
@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
     boolMap test;
     test.fillMapFromFile(argv[1]);
     test.printMap();
-
 
 
     return 0;

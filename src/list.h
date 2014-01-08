@@ -31,6 +31,7 @@ public:
     LLiterator<T> operator--(int);
 
     T& operator*()const;
+    T* operator->()const;
     bool operator== (LLiterator<T>& right)const;
     bool operator!= (LLiterator<T>& right)const{return !(*this == right);}
 private:
@@ -80,6 +81,12 @@ T& LLiterator<T>::operator*()const
 }
 
 template<class T>
+T* LLiterator<T>::operator->()const
+{
+    return &this->ptr->val;
+}
+
+template<class T>
 bool LLiterator<T>::operator==(LLiterator<T>& right)const
 {
     return this->ptr == right.ptr;
@@ -100,7 +107,6 @@ public:
 
     bool Remove(LLiterator<T> iter);
     bool RemoveFromBegin(){return this->Remove(this->GetItBegin());}
-    bool RemoveFromEnd(){return this->Remove(this->GetItEnd());}
 
     bool IsEmpty(){return size <= 0;}
     size_t GetSeize(){return this->size;}
@@ -172,7 +178,7 @@ void LinkedList<T>::print()
 template<class T>
 bool LinkedList<T>::InsertBetween(LLnode<T>* left, LLnode<T>* right, const T& val)
 {
-    LLnode<T>* tmp = new LLnode<T>(val);
+    LLnode<T>* tmp = new(nothrow) LLnode<T>(val);
     if(!tmp)
     {
         return false;
