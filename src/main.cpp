@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "graph.h"
-#include "BoolMap.h"
+#include "Utils.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -20,10 +19,11 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    boolMap test;
-    test.fillMapFromFile(argv[1]);
-    test.printMap();
-
+    boolMap map;
+    map.fillMapFromFile(argv[1]);
+    map.printMap();
+    Graph<LinkedList<LinkedList<int> > >graph;
+    //cout << fromBoolMapToGraph(map, graph);
 
     return 0;
 }

@@ -39,6 +39,7 @@ public:
     bool RemoveEdge(LLiterator<GraphNode<T>*> left, LLiterator<GraphNode<T>*> right);
     bool RemoveEdge(GraphNode<T>* left, GraphNode<T>* right);
 
+    bool hasEdge(LLiterator<GraphNode<T>*> left, LLiterator<GraphNode<T>*> right);
     bool hasEdge(GraphNode<T>* left, GraphNode<T>* right);
 
     LinkedList<GraphNode<T>*> * GetListOfNodes(){return &this->nodes;}
@@ -205,6 +206,12 @@ bool Graph<T>::hasEdge(GraphNode<T>* left, GraphNode<T>* right)
     }
 
     return leftRight && rightLeft;
+}
+
+template <class T>
+bool Graph<T>::hasEdge(LLiterator<GraphNode<T>*> left, LLiterator<GraphNode<T>*> right)
+{
+    return this->hasEdge(*left, *right);
 }
 
 template <class T>

@@ -26,6 +26,14 @@ void boolMap::printMap()
 {
     for(unsigned cnt = this->heigth; cnt > 0; cnt--)
     {
+        if(cnt > 1 && cnt < this->heigth)
+        {
+            cout << cnt - 1;
+        }
+        else
+        {
+            cout << " ";
+        }
         for(unsigned cnt2 = 0; cnt2 < this->width; cnt2++)
         {
             if(this->map[cnt2][cnt - 1])
@@ -39,12 +47,17 @@ void boolMap::printMap()
         }
         cout << endl;
     }
+    cout << "  ";
+    for(unsigned cnt = 0; cnt < this->width - 2; ++cnt)
+    {
+        cout << (char)('A' + cnt);
+    }
 }
 
 bool boolMap::initMap(unsigned heigth, unsigned width)
 {
-    this->heigth = heigth;
-    this->width = width;
+    this->heigth = heigth + 2;
+    this->width = width + 2;
     this->map = new(nothrow) bool*[this->width];
     if(!this->map)
     {
@@ -64,6 +77,18 @@ bool boolMap::initMap(unsigned heigth, unsigned width)
         for(unsigned i = 0; i < heigth; i++)
             this->map[cnt][i] = false;
     }
+
+    for (unsigned cnt = 0; cnt < this->heigth; cnt++)
+    {
+        this->map[cnt][this->width - 1] = true;
+        this->map[cnt][0] = true;
+    }
+    for (unsigned cnt = 0; cnt < this->width; cnt++)
+    {
+        this->map[this->heigth - 1][cnt] = true;
+        this->map[0][cnt] = true;
+    }
+
     return true;
 }
 
@@ -100,6 +125,10 @@ bool boolMap::fillMapFromFile(const char* filePath)
         inFile >> a.y;
         inFile >> b.x;
         inFile >> b.y;
+        ++ a.x;
+        ++ a.y;
+        ++ b.x;
+        ++ b.y;
         this->fillRect(a,b);
     }
 

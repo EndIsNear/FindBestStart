@@ -34,6 +34,8 @@
 		</Compiler>
 		<Unit filename="src/BoolMap.cpp" />
 		<Unit filename="src/BoolMap.h" />
+		<Unit filename="src/Utils.cpp" />
+		<Unit filename="src/Utils.h" />
 		<Unit filename="src/graph.h" />
 		<Unit filename="src/list.h" />
 		<Unit filename="src/main.cpp" />
