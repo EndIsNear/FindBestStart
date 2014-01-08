@@ -22,6 +22,11 @@ boolMap::~boolMap()
     delete[] this->map;
 }
 
+bool boolMap::isFree(dot a)
+{
+    return !(this->map[a.x + 1][a.y + 1]);
+}
+
 void boolMap::printMap()
 {
     for(unsigned cnt = this->heigth; cnt > 0; cnt--)

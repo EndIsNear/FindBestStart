@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     boolMap map;
     map.fillMapFromFile(argv[1]);
     map.printMap();
-    Graph<LinkedList<LinkedList<int> > >graph;
+    Graph<LinkedList<dot> >graph;
     //cout << fromBoolMapToGraph(map, graph);
 
     return 0;
