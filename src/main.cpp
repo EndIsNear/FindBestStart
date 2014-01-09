@@ -22,8 +22,10 @@ int main(int argc, char *argv[])
     boolMap map;
     map.fillMapFromFile(argv[1]);
     map.printMap();
-    Graph<LinkedList<dot> >graph;
-    //cout << fromBoolMapToGraph(map, graph);
+
+    LinkedList<int> list;
+    list.AddAtBegin(12);
+    list.print(cout);
 
     return 0;
 }
