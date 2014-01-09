@@ -43,6 +43,20 @@ public:
         this->pivot.pPrev = &this->pivot;
     }
 
+    LinkedList(const LinkedList& list)
+    {
+        this->size = 0;
+        this->pivot.pNext = &this->pivot;
+        this->pivot.pPrev = &this->pivot;
+        this->copy(list);
+    }
+
+    LinkedList<T>& operator=(const LinkedList<T>& list)
+    {
+        this->delList();
+        this->copy(list);
+    }
+
     ~LinkedList()
     {
         this->delList();
@@ -52,6 +66,16 @@ public:
     {
         LinkedList<T>::LLiterator it = this->GetItBegin();
         while(this->Remove(it++));
+    }
+
+    void copy (const LinkedList& list)
+    {
+        const LinkedList<T>::LLnode* node = list.pivot.pNext;
+        while(node != &list.pivot)
+        {
+            this->AddAtEnd(node->val);
+            node = node->pNext;
+        }
     }
 
     bool AddAtBegin(const T& val)

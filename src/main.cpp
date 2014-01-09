@@ -23,9 +23,5 @@ int main(int argc, char *argv[])
     map.fillMapFromFile(argv[1]);
     map.printMap();
 
-    LinkedList<int> list;
-    list.AddAtBegin(12);
-    list.print(cout);
-
     return 0;
 }
