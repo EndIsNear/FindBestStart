@@ -8,6 +8,9 @@ using namespace std;
 template<class T>
 class LinkedList
 {
+    template <class D>
+    friend class Graph;
+
     struct LLnode
     {
         LLnode(){}
@@ -129,7 +132,10 @@ public:
             return iter;
         }
 
-        T& operator*()const{return this->ptr->val;}
+        T& operator*()const
+        {
+            return this->ptr->val;
+        }
         T* operator->()const{return &this->ptr->val;}
         bool operator== (LinkedList<T>::LLiterator& right)const
         {

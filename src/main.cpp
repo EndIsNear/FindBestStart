@@ -22,8 +22,16 @@ int main(int argc, char *argv[])
     boolMap map;
     map.fillMapFromFile(argv[1]);
     map.printMap();
+    cout << endl;
 
     Graph<int> gr;
+    gr.AddNode(15);
+    gr.AddNode(113);
+    LinkedList<Graph<int>::GraphNode*>::LLiterator iter = gr.GetNodeIterBegin();
+    LinkedList<Graph<int>::GraphNode*>::LLiterator iter2 = gr.GetNodeIterBegin();
+    iter2++;
+    //gr.AddEdge(iter, iter2);
 
+    //gr.print();
     return 0;
 }

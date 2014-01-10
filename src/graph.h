@@ -8,7 +8,6 @@ class Graph
 {
 
     struct GraphNode;
-    typedef Graph<T>::GraphNode GraphNode;
 
     struct GraphEdge
     {
@@ -17,9 +16,6 @@ class Graph
         GraphNode* adjacent;
     };
 
-    typedef Graph<T>::GraphEdge GraphEdge;
-    typedef typename LinkedList<GraphNode*>::LLiterator IterPtrGrNode;
-    typedef typename LinkedList<GraphEdge*>::LLiterator IterPtrGrEdge;
 
     struct GraphNode
     {
@@ -45,6 +41,13 @@ class Graph
         return '0';
     }
 public:
+    typedef Graph<T>::GraphEdge GraphEdge;
+    typedef Graph<T>::GraphNode GraphNode;
+
+    typedef typename LinkedList<GraphNode*>::LLiterator IterPtrGrNode;
+    typedef typename LinkedList<GraphEdge*>::LLiterator IterPtrGrEdge;
+    typedef typename LinkedList<GraphNode*>::LLnode LLnodeGrNode;
+    typedef typename LinkedList<GraphEdge*>::LLnode LLnodeGrEdge;
 
     Graph(){this->nodeCnt = 0;}
     ~Graph()
@@ -169,61 +172,60 @@ public:
     bool hasEdge(GraphNode* left, GraphNode* right)const
     {
         bool leftRight = false, rightLeft = false;
-        IterPtrGrEdge edgeIter = left->adjacents.GetItBegin();
-        IterPtrGrEdge edgeEnd = left->adjacents.GetItEnd();
-        while(edgeIter != edgeEnd)
+
+        const LLnodeGrEdge* edgeIter = left->adjacents.pivot.pNext;
+        while(edgeIter != &left->adjacents.pivot)
         {
-            if((*edgeIter)->adjacent == right)
+            if(edgeIter->val->adjacent == right)
             {
                 leftRight = true;
                 break;
             }
-            ++edgeIter;
+            edgeIter = edgeIter->pNext;
         }
 
-        edgeIter = right->adjacents.GetItBegin();
-        edgeEnd = right->adjacents.GetItEnd();
-        while(edgeIter != edgeEnd)
+        edgeIter = right->adjacents.pivot.pNext;
+        while(edgeIter != &right->adjacents.pivot)
         {
-            if((*edgeIter)->adjacent == left)
+            if(edgeIter->val->adjacent == left)
             {
                 rightLeft = true;
                 break;
             }
-            ++edgeIter;
+            edgeIter = edgeIter->pNext;
         }
 
         return leftRight && rightLeft;
     }
 
-    bool print()const
+    bool print(ostream& stream = cout)const
     {
         GraphNode** index = new(nothrow) GraphNode*[this->nodeCnt];
         if(!index)
         {
             return false;
         }
-        IterPtrGrNode iter = this->nodes.GetItBegin();
-        IterPtrGrNode itEnd = this->nodes.GetItEnd();
+        const LLnodeGrNode * iter = this->nodes.pivot.pNext;
 
-        for(unsigned cnt = 0; iter!= itEnd; cnt++, ++iter)
+        for(unsigned cnt = 0; iter!= &this->nodes.pivot; cnt++, iter = iter->pNext)
         {
-            index[cnt] = *iter;
+            index[cnt] = iter->val;
         }
-        iter = this->nodes.GetItBegin();
-        while(iter != itEnd)
+        iter = this->nodes.pivot.pNext;
+        while(iter!= &this->nodes.pivot)
         {
-            cout << this->GetCharForNode(index, *iter) << " - ";
-            cout << (*iter)->val << ":";
-            IterPtrGrEdge edgeIter = (*iter)->adjacents.GetItBegin();
-            IterPtrGrEdge edgeEnd = (*iter)->adjacents.GetItEnd();
-            while(edgeIter != edgeEnd)
+            stream << this->GetCharForNode(index, iter->val) << " - ";
+            stream << iter->val->val << ":";
+
+            const LLnodeGrEdge* edgeIter = iter->val->adjacents.pivot.pNext;
+            while(edgeIter != &iter->val->adjacents.pivot)
             {
-                cout << this->GetCharForNode(index, (*edgeIter)->adjacent) << "[" << (*edgeIter)->weight << "]"<< " ";
-                ++edgeIter;
+                stream << this->GetCharForNode(index, edgeIter->val->adjacent) << "["
+                    << edgeIter->val->weight << "] ";
+                edgeIter = edgeIter->pNext;
             }
-            cout << endl;
-            ++iter;
+            stream << endl;
+            iter = iter->pNext;
         }
         for(unsigned cnt = 0; cnt < this->nodeCnt; ++cnt)
         {
@@ -237,6 +239,11 @@ public:
     bool isEmpty()const
     {
         return nodeCnt <= 0;
+    }
+
+    IterPtrGrNode GetNodeIterBegin()
+    {
+        return this->nodes.GetItBegin();
     }
 };
 
