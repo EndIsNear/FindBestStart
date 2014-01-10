@@ -23,5 +23,7 @@ int main(int argc, char *argv[])
     map.fillMapFromFile(argv[1]);
     map.printMap();
 
+    Graph<int> gr;
+
     return 0;
 }

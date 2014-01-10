@@ -53,8 +53,11 @@ public:
 
     LinkedList<T>& operator=(const LinkedList<T>& list)
     {
+        if(this == &list)
+            return *this;
         this->delList();
         this->copy(list);
+        return *this;
     }
 
     ~LinkedList()
@@ -128,14 +131,26 @@ public:
 
         T& operator*()const{return this->ptr->val;}
         T* operator->()const{return &this->ptr->val;}
-        bool operator== (LinkedList<T>::LLiterator& right)const{return this->ptr == right.ptr;}
-        bool operator!= (LinkedList<T>::LLiterator& right)const{return !(*this == right);}
+        bool operator== (LinkedList<T>::LLiterator& right)const
+        {
+            return this->ptr == right.ptr;
+        }
+        bool operator!= (LinkedList<T>::LLiterator& right)const
+        {
+            return !(*this == right);
+        }
     private:
         LinkedList<T>::LLnode* ptr;
     };
 
-    LinkedList<T>::LLiterator GetItBegin(){return LinkedList<T>::LLiterator(this->pivot.pNext);}
-    LinkedList<T>::LLiterator GetItEnd(){return LinkedList<T>::LLiterator(&this->pivot);}
+    LinkedList<T>::LLiterator GetItBegin()
+    {
+        return LinkedList<T>::LLiterator(this->pivot.pNext);
+    }
+    LinkedList<T>::LLiterator GetItEnd()
+    {
+        return LinkedList<T>::LLiterator(&this->pivot);
+    }
 
     bool Remove(LinkedList<T>::LLiterator iter)
     {
@@ -154,18 +169,17 @@ public:
 
     bool IsEmpty()const{return size <= 0;}
     size_t GetSeize()const{return this->size;}
-    void print(ostream& stream)
+    void print(ostream& stream = cout)const
     {
-        LinkedList<T>::LLiterator iter = this->GetItBegin();
-        LinkedList<T>::LLiterator iterEnd = this->GetItEnd();
         if(this->IsEmpty())
             return;
-        stream << *iter;
-        ++iter;
-        while(iter != iterEnd)
+        const LinkedList<T>::LLnode* node = this->pivot.pNext;
+        stream << node->val;
+        node = node->pNext;
+        while(node != &this->pivot)
         {
-            stream << ", " << *iter;
-            ++iter;
+            stream << ", " << node->val;
+            node = node->pNext;
         }
     }
 };
