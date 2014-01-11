@@ -5,7 +5,7 @@
 #include "BoolMap.h"
 
 
-//bool fromBoolMapToGraph(boolMap& map, Graph<int>& graph);
+bool fromBoolMapToGraph(boolMap& map, Graph<int>& graph);
 
 
 #endif // UTILS_H_INCLUDED

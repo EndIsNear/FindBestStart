@@ -19,19 +19,18 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    boolMap map;
-    map.fillMapFromFile(argv[1]);
-    map.printMap();
-    cout << endl;
+//    boolMap map;
+//    map.fillMapFromFile(argv[1]);
+//    map.printMap();
+//    cout << endl;
 
     Graph<int> gr;
-    gr.AddNode(15);
-    gr.AddNode(113);
-    LinkedList<Graph<int>::GraphNode*>::LLiterator iter = gr.GetNodeIterBegin();
-    LinkedList<Graph<int>::GraphNode*>::LLiterator iter2 = gr.GetNodeIterBegin();
-    iter2++;
-    //gr.AddEdge(iter, iter2);
+    gr.AddNode(121);
+    gr.print();
+    gr.print();
+    gr.print();
 
-    //gr.print();
+
+
     return 0;
 }

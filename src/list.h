@@ -34,7 +34,7 @@ class LinkedList
         tmp->pNext = right;
         left->pNext = tmp;
         right->pPrev = tmp;
-        this->size++;
+        ++this->size;
         return true;
     }
 
@@ -98,7 +98,10 @@ public:
     {
         friend class LinkedList<T>;
     public:
-        LLiterator(LinkedList<T>::LLnode* _ptr = NULL){this->ptr = _ptr;}
+        LLiterator(LinkedList<T>::LLnode* _ptr = NULL)
+        {
+            this->ptr = _ptr;
+        }
 
         LinkedList<T>::LLiterator& operator++()
         {
@@ -136,7 +139,10 @@ public:
         {
             return this->ptr->val;
         }
-        T* operator->()const{return &this->ptr->val;}
+        T* operator->()const
+        {
+            return &this->ptr->val;
+        }
         bool operator== (LinkedList<T>::LLiterator& right)const
         {
             return this->ptr == right.ptr;
@@ -169,9 +175,13 @@ public:
         tmp->pNext->pPrev = tmp->pPrev;
         tmp->pPrev->pNext = tmp->pNext;
         delete tmp;
+        this->size--;
         return true;
     }
-    bool RemoveFromBegin(){return this->Remove(this->GetItBegin());}
+    bool RemoveFromBegin()
+    {
+        return this->Remove(this->GetItBegin());
+    }
 
     bool IsEmpty()const{return size <= 0;}
     size_t GetSeize()const{return this->size;}

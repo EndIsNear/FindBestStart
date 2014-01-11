@@ -11,7 +11,11 @@ class Graph
 
     struct GraphEdge
     {
-        GraphEdge(float _weight, GraphNode* _adjacent){weight = _weight; adjacent = _adjacent;}
+        GraphEdge(float _weight, GraphNode* _adjacent)
+        {
+            weight = _weight;
+            adjacent = _adjacent;
+        }
         float weight;
         GraphNode* adjacent;
     };
@@ -19,7 +23,10 @@ class Graph
 
     struct GraphNode
     {
-        GraphNode(T _val){val = _val;}
+        GraphNode(T _val)
+        {
+            val = _val;
+        }
         T val;
         LinkedList<GraphEdge*> adjacents;
     };
@@ -49,7 +56,10 @@ public:
     typedef typename LinkedList<GraphNode*>::LLnode LLnodeGrNode;
     typedef typename LinkedList<GraphEdge*>::LLnode LLnodeGrEdge;
 
-    Graph(){this->nodeCnt = 0;}
+    Graph()
+    {
+        this->nodeCnt = 0;
+    }
     ~Graph()
     {
         IterPtrGrNode it = this->nodes.GetItBegin();
@@ -70,7 +80,6 @@ public:
         }
         this->nodes.AddAtEnd(tmp);
         this->nodeCnt++;
-
         return true;
     }
 
@@ -78,6 +87,8 @@ public:
     {
         IterPtrGrEdge edgeIter = node->adjacents.GetItBegin();
         IterPtrGrEdge edgeEnd = node->adjacents.GetItEnd();
+        if(node->adjacents.IsEmpty())
+            return true;
         while(edgeIter != edgeEnd)
         {
             if(!this->RemoveEdge(node, (*edgeIter)->adjacent ))
@@ -227,10 +238,7 @@ public:
             stream << endl;
             iter = iter->pNext;
         }
-        for(unsigned cnt = 0; cnt < this->nodeCnt; ++cnt)
-        {
-            delete index[cnt];
-        }
+
         delete[] index;
 
         return true;
@@ -244,6 +252,11 @@ public:
     IterPtrGrNode GetNodeIterBegin()
     {
         return this->nodes.GetItBegin();
+    }
+
+    IterPtrGrNode GetNodeIterEnd()
+    {
+        return this->nodes.GetItEnd();
     }
 };
 
