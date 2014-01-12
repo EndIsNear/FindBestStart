@@ -66,8 +66,9 @@ public:
         IterPtrGrNode itEnd = this->nodes.GetItEnd();
         while(it != itEnd)
         {
-            this->RemoveNode(it);
+            IterPtrGrNode tmp(it);
             ++it;
+            this->RemoveNode(tmp);
         }
     }
 
@@ -91,7 +92,9 @@ public:
             return true;
         while(edgeIter != edgeEnd)
         {
-            if(!this->RemoveEdge(node, (*edgeIter)->adjacent ))
+            IterPtrGrEdge tmp(edgeIter);
+            ++edgeIter;
+            if(!this->RemoveEdge(node, (*tmp)->adjacent ))
             {
                 return false;
             }
@@ -106,6 +109,7 @@ public:
         {
             return false;
         }
+        delete *node;
         this->nodes.Remove(node);
         --this->nodeCnt;
 
