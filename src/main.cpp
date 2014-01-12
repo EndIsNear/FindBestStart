@@ -19,10 +19,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    boolMap map;
+    charMap map;
     map.fillMapFromFile(argv[1]);
     map.printMap();
-    cout << endl;
 
     return 0;
 }

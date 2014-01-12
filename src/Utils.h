@@ -2,10 +2,10 @@
 #define UTILS_H_INCLUDED
 
 #include "graph.h"
-#include "BoolMap.h"
+#include "CharMap.h"
 
 
-bool fromBoolMapToGraph(boolMap& map, Graph<int>& graph);
+bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph);
 
 
 #endif // UTILS_H_INCLUDED

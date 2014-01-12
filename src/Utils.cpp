@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-bool fromBoolMapToGraph(boolMap& map, Graph<int>& graph)
+bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph)
 {
     return true;
 }

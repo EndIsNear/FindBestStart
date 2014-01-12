@@ -2,18 +2,18 @@
 #include <iostream>
 #include <fstream>
 
-#include "BoolMap.h"
+#include "charMap.h"
 
 using namespace std;
 
-boolMap::boolMap()
+charMap::charMap()
 {
     this->heigth = 0;
     this->width = 0;
     this->map = NULL;
 }
 
-boolMap::~boolMap()
+charMap::~charMap()
 {
     for(unsigned cnt = 0; cnt < this->width; cnt++)
     {
@@ -22,12 +22,7 @@ boolMap::~boolMap()
     delete[] this->map;
 }
 
-bool boolMap::isFree(dot a)
-{
-    return !(this->map[a.x + 1][a.y + 1]);
-}
-
-void boolMap::printMap()
+void charMap::printMap()const
 {
     for(unsigned cnt = this->heigth; cnt > 0; cnt--)
     {
@@ -41,13 +36,21 @@ void boolMap::printMap()
         }
         for(unsigned cnt2 = 0; cnt2 < this->width; cnt2++)
         {
-            if(this->map[cnt2][cnt - 1])
+            if(this->map[cnt2][cnt - 1] == 1)//1 - border
             {
                 cout << (char)219;
             }
-            else
+            else if(this->map[cnt2][cnt - 1] == 0)//0 - free
             {
                 cout << " ";
+            }
+            else if(this->map[cnt2][cnt - 1] == 2)//2 - checked
+            {
+                cout << "x";
+            }
+            else if (this->map[cnt2][cnt - 1] == 3)//3 - start position
+            {
+                cout << "S";
             }
         }
         cout << endl;
@@ -59,18 +62,18 @@ void boolMap::printMap()
     }
 }
 
-bool boolMap::initMap(unsigned heigth, unsigned width)
+bool charMap::initMap(unsigned heigth, unsigned width)
 {
     this->heigth = heigth + 2;
     this->width = width + 2;
-    this->map = new(nothrow) bool*[this->width];
+    this->map = new(nothrow) char*[this->width];
     if(!this->map)
     {
         return false;
     }
     for(unsigned cnt = 0; cnt < this->width; cnt++)
     {
-        this->map[cnt] = new(nothrow) bool[this->heigth];
+        this->map[cnt] = new(nothrow) char[this->heigth];
         if(!this->map[cnt])
         {
             for(unsigned cntForDel = 0; cntForDel < cnt; cntForDel++)
@@ -97,22 +100,22 @@ bool boolMap::initMap(unsigned heigth, unsigned width)
     return true;
 }
 
-bool boolMap::fillRect(dot x, dot y)
+bool charMap::fillRect(dot a, dot b)
 {
-    if(x.x < 0 || y.x >= this->width || x.y < 0 || y.y >= this->heigth)
+    if(a.x < 0 || b.x >= this->width || a.y < 0 || b.y >= this->heigth)
     {
         return false;
     }
-    for(unsigned i = x.x; i <= y.x; i++)
-        for(unsigned j = x.y; j <= y.y; j++)
+    for(unsigned i = a.x; i <= b.x; i++)
+        for(unsigned j = a.y; j <= b.y; j++)
         {
-            this->map[i][j] = true;
+            this->map[i][j] = 1;
         }
 
     return true;
 }
 
-bool boolMap::fillMapFromFile(const char* filePath)
+bool charMap::fillMapFromFile(const char* filePath)
 {
     dot a(0,0), b(0,0);
     ifstream inFile(filePath);
@@ -140,4 +143,31 @@ bool boolMap::fillMapFromFile(const char* filePath)
 
     inFile.close();
     return true;
+}
+
+bool charMap::isFree(dot a)const
+{
+
+    return !this->map[a.x + 1][a.y + 1];
+}
+
+bool charMap::isChecked(dot a)const
+{
+    return this->map[a.x + 1][a.y + 1] == 2;
+}
+
+bool charMap::isFreeAndUncheckd(dot a)const
+{
+    return this->isFree(a) && !this->isChecked(a);
+}
+
+void charMap::markAsChecked(dot a)const
+{
+    this->map[a.x + 1][a.y + 1] = 2;
+}
+
+ostream& operator<<(ostream& stream, const dot& dot)
+{
+    stream << "(" << dot.y <<", " << dot.x << ")";
+    return stream;
 }
