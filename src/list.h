@@ -198,5 +198,13 @@ public:
             node = node->pNext;
         }
     }
+    //friend ostream& operator<<(ostream& stream, const LinkedList<T>& list);
 };
+
+template <class T>
+ostream& operator<<(ostream& stream, const LinkedList<T>& list)
+{
+    list.print(stream);
+    return stream;
+}
 #endif // LIST_H_INCLUDED

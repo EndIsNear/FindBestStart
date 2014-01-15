@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test.txt" />
+				<Option parameters="test2.txt" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -32,8 +32,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/BoolMap.cpp" />
-		<Unit filename="src/BoolMap.h" />
+		<Unit filename="src/CharMap.cpp" />
+		<Unit filename="src/CharMap.h" />
 		<Unit filename="src/Utils.cpp" />
 		<Unit filename="src/Utils.h" />
 		<Unit filename="src/graph.h" />

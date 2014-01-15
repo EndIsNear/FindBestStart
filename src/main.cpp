@@ -22,6 +22,12 @@ int main(int argc, char *argv[])
     charMap map;
     map.fillMapFromFile(argv[1]);
     map.printMap();
+    cout << endl;
+    Graph<LinkedList<dot> > gr;
+    fromBoolMapToGraph(map, gr);
+    gr.print();
+    cout << endl;
+    map.printMap();
 
     return 0;
 }

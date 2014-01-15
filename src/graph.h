@@ -6,7 +6,7 @@
 template <class T>
 class Graph
 {
-
+    friend struct dotIters;
     struct GraphNode;
 
     struct GraphEdge
