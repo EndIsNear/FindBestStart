@@ -98,7 +98,6 @@ public:
             {
                 return false;
             }
-            ++edgeIter;
         }
         return true;
     }
