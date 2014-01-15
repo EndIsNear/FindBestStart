@@ -26,7 +26,7 @@ bool initIterMap (charMap& map, Graph<LinkedList<dot> >& graph, dotIters *** ite
     {
         return false;
     }
-    for(int i = 0; i < map.getHeigth(); ++i)
+    for(int i = 0; i < map.getWidth(); ++i)
     {
         (*iterMap)[i] = new(nothrow) dotIters[map.getHeigth()];
         if(!(*iterMap)[i])
@@ -141,7 +141,7 @@ bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph)
 
     for(int i = 0; i < map.getWidth(); ++i)
     {
-        if(!fillRowNode(map, graph, dot(i,0), iterMap, false))
+        if(!fillRowNode(map, graph, dot(i,0), iterMap , false))
         {
             return false;
         }
