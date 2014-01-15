@@ -15,7 +15,7 @@ charMap::charMap()
 
 charMap::~charMap()
 {
-    for(unsigned cnt = 0; cnt < this->width; cnt++)
+    for(int cnt = 0; cnt < this->width; cnt++)
     {
         delete[] this->map[cnt];
     }
@@ -24,7 +24,7 @@ charMap::~charMap()
 
 void charMap::printMap()const
 {
-    for(unsigned cnt = this->heigth; cnt > 0; cnt--)
+    for(int cnt = this->heigth; cnt > 0; cnt--)
     {
         if(cnt > 1 && cnt < this->heigth)
         {
@@ -34,7 +34,7 @@ void charMap::printMap()const
         {
             cout << " ";
         }
-        for(unsigned cnt2 = 0; cnt2 < this->width; cnt2++)
+        for(int cnt2 = 0; cnt2 < this->width; cnt2++)
         {
             if(this->map[cnt2][cnt - 1] == 1)//1 - border
             {
@@ -56,45 +56,45 @@ void charMap::printMap()const
         cout << endl;
     }
     cout << "  ";
-    for(unsigned cnt = 0; cnt < this->width - 2; ++cnt)
+    for(int cnt = 0; cnt < this->width - 2; ++cnt)
     {
         cout << (char)('A' + cnt);
     }
 }
 
-bool charMap::initMap(unsigned heigth, unsigned width)
+bool charMap::initMap(int heigth, int width)
 {
-    this->heigth = heigth + 2;
     this->width = width + 2;
+    this->heigth = heigth + 2;
+
     this->map = new(nothrow) char*[this->width];
     if(!this->map)
     {
         return false;
     }
-    for(unsigned cnt = 0; cnt < this->width; cnt++)
+    for(int i = 0; i < this->width; ++i)
     {
-        this->map[cnt] = new(nothrow) char[this->heigth];
-        if(!this->map[cnt])
+        this->map[i] = new(nothrow) char[this->heigth];
+        if(!this->map[i])
         {
-            for(unsigned cntForDel = 0; cntForDel < cnt; cntForDel++)
-            {
-                delete[] this->map[cntForDel];
-            }
             return false;
         }
-        for(unsigned i = 0; i < heigth; i++)
-            this->map[cnt][i] = false;
+        for(int j = 0; j < this->heigth; ++j)
+        {
+            this->map[i][j] = 0;
+        }
     }
 
-    for (unsigned cnt = 0; cnt < this->heigth; cnt++)
+    for(int i = 0; i < this->width; ++i)
     {
-        this->map[cnt][this->width - 1] = true;
-        this->map[cnt][0] = true;
+        this->map[i][0] = 1;
+        this->map[i][this->heigth - 1] = 1;
     }
-    for (unsigned cnt = 0; cnt < this->width; cnt++)
+
+    for(int i = 0; i < this->heigth; ++i)
     {
-        this->map[this->heigth - 1][cnt] = true;
-        this->map[0][cnt] = true;
+        this->map[0][i] = 1;
+        this->map[this->width - 1][i] = 1;
     }
 
     return true;
@@ -106,8 +106,8 @@ bool charMap::fillRect(dot a, dot b)
     {
         return false;
     }
-    for(unsigned i = a.x; i <= b.x; i++)
-        for(unsigned j = a.y; j <= b.y; j++)
+    for(int i = a.x; i <= b.x; i++)
+        for(int j = a.y; j <= b.y; j++)
         {
             this->map[i][j] = 1;
         }
@@ -124,9 +124,18 @@ bool charMap::fillMapFromFile(const char* filePath)
         cerr << "Cannot open the file - " << filePath << "!" << endl;
         return false;
     }
-    inFile >> this->width;
-    inFile >> this->heigth;
-    this->initMap(this->width, this->heigth);
+    int width, heigth;
+
+    inFile >> width;
+    inFile >> heigth;
+
+    if(width < 1 || heigth < 1)
+    {
+        cerr << "Width > 1 and Heigth > 1" << endl;
+        return false;
+    }
+
+    this->initMap(heigth, width);
     while(!inFile.eof())
     {
         inFile >> a.x;
@@ -149,21 +158,6 @@ bool charMap::isFree(dot a)const
 {
 
     return !this->map[a.x + 1][a.y + 1];
-}
-
-bool charMap::isChecked(dot a)const
-{
-    return this->map[a.x + 1][a.y + 1] == 2;
-}
-
-bool charMap::isFreeAndUncheckd(dot a)const
-{
-    return this->isFree(a) && !this->isChecked(a);
-}
-
-void charMap::markAsChecked(dot a)const
-{
-    this->map[a.x + 1][a.y + 1] = 2;
 }
 
 ostream& operator<<(ostream& stream, const dot& dot)

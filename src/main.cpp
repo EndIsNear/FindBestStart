@@ -20,14 +20,17 @@ int main(int argc, char *argv[])
     }
 
     charMap map;
-    map.fillMapFromFile(argv[1]);
+    if(!map.fillMapFromFile(argv[1]))
+    {
+        cerr << "Cannot load map!" << endl;
+        return -1;
+    }
     map.printMap();
+
     cout << endl;
     Graph<LinkedList<dot> > gr;
     fromBoolMapToGraph(map, gr);
     gr.print();
-    cout << endl;
-    map.printMap();
 
     return 0;
 }

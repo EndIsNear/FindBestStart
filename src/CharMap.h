@@ -4,8 +4,8 @@
 struct dot
 {
     dot(){}
-    dot(unsigned _x, unsigned _y){x = _x; y = _y;}
-    unsigned x,y;
+    dot(int _x, int _y){x = _x; y = _y;}
+    int x,y;
 };
 std::ostream& operator<<(std::ostream& stream, const dot& dot);
 
@@ -22,17 +22,22 @@ public:
     //3 - start position
 
     void printMap()const;
-    bool initMap(unsigned heigth, unsigned width);
+    bool initMap(int heigth, int width);
     bool fillRect(dot a, dot b);
     bool fillMapFromFile(const char* filePath);
 
     bool isFree(dot a)const;
-    bool isChecked(dot a)const;
-    bool isFreeAndUncheckd(dot a)const;
-    void markAsChecked(dot a)const;
+
+    int getHeigth()
+    {
+        return this->heigth - 2;
+    }
+    int getWidth()
+    {
+        return this->width - 2;
+    }
 private:
-    unsigned heigth;
-    unsigned width;
+    int heigth, width;
     char ** map;
 };
 
