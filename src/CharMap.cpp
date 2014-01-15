@@ -162,6 +162,6 @@ bool charMap::isFree(dot a)const
 
 ostream& operator<<(ostream& stream, const dot& dot)
 {
-    stream << "(" << dot.y <<", " << dot.x << ")";
+    stream << "(" <<(char)(dot.x + 'A') <<", " << dot.y + 1 << ")";
     return stream;
 }

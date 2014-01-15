@@ -42,7 +42,7 @@ bool initIterMap (charMap& map, Graph<LinkedList<dot> >& graph, dotIters *** ite
     return true;
 }
 
-bool addGraphEdges(Graph<LinkedList<dot> >& graph, dotIters ** iterMap, int heigth, int width)
+bool addGraphEdges(Graph<LinkedList<dot> >& graph, dotIters ** iterMap, int width, int heigth)
 {
     for(int i = 0; i < width; ++i)
     {
@@ -139,14 +139,6 @@ bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph)
         return false;
     }
 
-    for(int i = 0; i < map.getHeigth(); ++i)
-    {
-        if(!fillRowNode(map, graph, dot(0,i), iterMap, true))
-        {
-            return false;
-        }
-    }
-
     for(int i = 0; i < map.getWidth(); ++i)
     {
         if(!fillRowNode(map, graph, dot(i,0), iterMap, false))
@@ -156,7 +148,15 @@ bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph)
     }
 
 
-    if(!addGraphEdges(graph, iterMap, map.getHeigth(), map.getWidth()))
+    for(int i = 0; i < map.getHeigth(); ++i)
+    {
+        if(!fillRowNode(map, graph, dot(0,i), iterMap, true))
+        {
+            return false;
+        }
+    }
+
+    if(!addGraphEdges(graph, iterMap, map.getWidth(), map.getHeigth()))
     {
         return false;
     }
