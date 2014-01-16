@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test2.txt" />
+				<Option parameters="test.txt" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -37,6 +37,7 @@
 		<Unit filename="src/Utils.cpp" />
 		<Unit filename="src/Utils.h" />
 		<Unit filename="src/graph.h" />
+		<Unit filename="src/heap.h" />
 		<Unit filename="src/list.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
