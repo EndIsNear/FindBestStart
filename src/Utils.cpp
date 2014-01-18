@@ -207,12 +207,9 @@ int Dijkstra (Graph<LinkedList<dot> >& graph, GraphNodeIter iter)
             if(dist[graph.GetNodeNum(edgeIter)] > crnWeight + (*edgeIter)->weight)
             {
                 dist[graph.GetNodeNum(edgeIter)] = crnWeight + (*edgeIter)->weight;
-                GraphNodeIter tmp = graph.EdgeIterToNodeIter(edgeIter);
 
                 iter = graph.EdgeIterToNodeIter(edgeIter);
                 heap.Push(iter, dist[graph.GetNodeNum(edgeIter)]);
-
-                //cout << dist[graph.GetNodeNum(edgeIter)] << " - " << (char)('A' + graph.GetNodeNum(edgeIter)) << endl;
             }
 
             ++edgeIter;
@@ -263,6 +260,8 @@ bool findBestNodes(Graph<LinkedList<dot> >& graph)
             cout << "Max:" << maxDist[i] << " - " << (*iter)->val << endl;
         }
     }
+
+    delete[] maxDist;
 
     return true;
 }

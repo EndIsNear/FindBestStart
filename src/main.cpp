@@ -26,13 +26,20 @@ int main(int argc, char *argv[])
         return -1;
     }
     map.printMap();
-    cout << endl;
+    cout << endl << endl;
 
-    Graph<LinkedList<dot> > gr;
-    fromBoolMapToGraph(map, gr);
-    //gr.print();
+    Graph<LinkedList<dot> > graph;
+    if(!fromBoolMapToGraph(map, graph))
+    {
+        return -1;
+    }
+    graph.print();
+    cout << endl << endl;
 
-    findBestNodes(gr);
+    if(!findBestNodes(graph))
+    {
+        return -1;
+    }
 
     return 0;
 }

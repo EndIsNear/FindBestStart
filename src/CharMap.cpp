@@ -107,10 +107,12 @@ bool charMap::fillRect(dot a, dot b)
         return false;
     }
     for(int i = a.x; i <= b.x; i++)
+    {
         for(int j = a.y; j <= b.y; j++)
         {
             this->map[i][j] = 1;
         }
+    }
 
     return true;
 }
@@ -149,14 +151,12 @@ bool charMap::fillMapFromFile(const char* filePath)
         this->fillRect(a,b);
     }
 
-
     inFile.close();
     return true;
 }
 
 bool charMap::isFree(dot a)const
 {
-
     return !this->map[a.x + 1][a.y + 1];
 }
 
