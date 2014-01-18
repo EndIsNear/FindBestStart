@@ -15,15 +15,15 @@ class Heap
     size_t size;
     size_t max_size;
 
-    int LeftChildIndex(int index)const
+    unsigned LeftChildIndex(int index)const
     {
         return index * 2;
     }
-    int RightChildIndex(int index)const
+    unsigned RightChildIndex(int index)const
     {
         return index * 2 + 1;
     }
-    int ParentIndex(int index)const
+    unsigned ParentIndex(int index)const
     {
         if(index > 1)
             return index/2;
@@ -50,7 +50,7 @@ class Heap
             return false;
         }
 
-        for(int i = 1; i <= size; ++i)
+        for(unsigned i = 1; i <= size; ++i)
         {
             newArr[i] = this->nodes[i];
         }
@@ -101,7 +101,7 @@ public:
         return true;
     }
 
-    T& Pop ()
+    T Pop ()
     {
         if(this->IsEmpty())
         {
@@ -115,7 +115,7 @@ public:
         int iter = 1;
 
         while((this->nodes[iter].weight > this->nodes[LeftChildIndex(iter)].weight && LeftChildIndex(iter) <= size)
-              || (this->nodes[iter].weight > this->nodes[RightChildIndex(iter)].weight) && RightChildIndex(iter) <= size)
+              || (this->nodes[iter].weight > this->nodes[RightChildIndex(iter)].weight && RightChildIndex(iter) <= size))
         {
             if(this->nodes[iter].weight > this->nodes[LeftChildIndex(iter)].weight && LeftChildIndex(iter) <= size
                && this->nodes[iter].weight > this->nodes[RightChildIndex(iter)].weight && RightChildIndex(iter) <= size)
@@ -156,6 +156,11 @@ public:
     size_t GetSize()const
     {
         return this->size;
+    }
+
+    int GetTopWeight()
+    {
+        return this->nodes[1].weight;
     }
 
     void print()

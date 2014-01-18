@@ -1,12 +1,17 @@
 #ifndef GRAPH_H_INCLUDED
 #define GRAPH_H_INCLUDED
-#include "list.h"
 
+#include "list.h"
+#include "CharMap.h"
+#include "heap.h"
+
+#include <climits>
 
 template <class T>
 class Graph
 {
     friend struct dotIters;
+
     struct GraphNode;
 
     struct GraphEdge
@@ -46,6 +51,18 @@ class Graph
             }
         }
         return '0';
+    }
+
+    int GetNodeNum(GraphNode* node)
+    {
+        int cnt = 0;
+        IterPtrGrNode iterBeg = this->GetNodeIterBegin();
+        while(node != *iterBeg)
+        {
+            ++iterBeg;
+            ++cnt;
+        }
+        return cnt;
     }
 public:
     typedef Graph<T>::GraphEdge GraphEdge;
@@ -252,6 +269,11 @@ public:
         return nodeCnt <= 0;
     }
 
+    int getSize()const
+    {
+        return this->nodeCnt;
+    }
+
     IterPtrGrNode GetNodeIterBegin()
     {
         return this->nodes.GetItBegin();
@@ -260,6 +282,27 @@ public:
     IterPtrGrNode GetNodeIterEnd()
     {
         return this->nodes.GetItEnd();
+    }
+
+    int GetNodeNum(IterPtrGrEdge iter)
+    {
+        return this->GetNodeNum((*iter)->adjacent);
+    }
+
+    int GetNodeNum(IterPtrGrNode iter)
+    {
+        return this->GetNodeNum(*iter);
+    }
+
+    IterPtrGrNode EdgeIterToNodeIter(IterPtrGrEdge& edgeIter)
+    {
+        IterPtrGrNode iter = this->GetNodeIterBegin();
+        while(*iter != (*edgeIter)->adjacent)
+        {
+            ++iter;
+        }
+
+        return iter;
     }
 };
 

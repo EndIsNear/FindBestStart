@@ -1,5 +1,7 @@
 #include "Utils.h"
 
+
+//FromMapToGraph
 struct dotIters
 {
     dotIters()
@@ -165,3 +167,102 @@ bool fromBoolMapToGraph(charMap& map, Graph<LinkedList<dot> >& graph)
     return true;
 }
 
+//Dijkstra part
+
+typedef LinkedList<Graph<LinkedList<dot> >::GraphNode*>::LLiterator GraphNodeIter;
+typedef LinkedList<Graph<LinkedList<dot> >::GraphEdge*>::LLiterator GraphEdgeIter;
+
+int Dijkstra (Graph<LinkedList<dot> >& graph, GraphNodeIter iter)
+{
+    Heap<GraphNodeIter> heap;
+    int nodeCnt = graph.getSize();
+    if(nodeCnt <= 1)
+    {
+        return -1;
+    }
+
+    int* dist = new(nothrow) int[nodeCnt];
+    if(!dist)
+    {
+        return -1;
+    }
+
+    for(int i = 0; i < nodeCnt; ++i)
+    {
+        dist[i] = INT_MAX;
+    }
+
+    heap.Push(iter, 0);
+    dist[graph.GetNodeNum(iter)] = 0;
+    while(!heap.IsEmpty())
+    {
+        int crnWeight = heap.GetTopWeight();
+        iter = heap.Pop();
+
+        GraphEdgeIter edgeIter = (*iter)->adjacents.GetItBegin();
+        GraphEdgeIter edgeEnd = (*iter)->adjacents.GetItEnd();
+
+        while(edgeIter != edgeEnd)
+        {
+            if(dist[graph.GetNodeNum(edgeIter)] > crnWeight + (*edgeIter)->weight)
+            {
+                dist[graph.GetNodeNum(edgeIter)] = crnWeight + (*edgeIter)->weight;
+                GraphNodeIter tmp = graph.EdgeIterToNodeIter(edgeIter);
+
+                iter = graph.EdgeIterToNodeIter(edgeIter);
+                heap.Push(iter, dist[graph.GetNodeNum(edgeIter)]);
+
+                //cout << dist[graph.GetNodeNum(edgeIter)] << " - " << (char)('A' + graph.GetNodeNum(edgeIter)) << endl;
+            }
+
+            ++edgeIter;
+        }
+    }
+    int max = dist[0];
+    for(int i = 0; i < nodeCnt; ++i)
+    {
+        if(dist[i] == INT_MAX)
+        {
+            delete[] dist;
+            return -1;
+        }
+        else if(dist[i] > max)
+        {
+            max = dist[i];
+        }
+    }
+
+    delete[] dist;
+    return max;
+}
+
+
+bool findBestNodes(Graph<LinkedList<dot> >& graph)
+{
+    GraphNodeIter iter = graph.GetNodeIterBegin();
+
+    int nodeCnt = graph.getSize();
+    int* maxDist = new(nothrow) int[nodeCnt];
+    if(!maxDist)
+    {
+        return false;
+    }
+
+    int result;
+    for(int i = 0; i < nodeCnt; ++i, ++iter)
+    {
+        result = Dijkstra(graph, iter);
+        if(result == -1)
+        {
+            cerr << "Unsuitable Labyrinth!" << endl;
+            return false;
+        }
+        else
+        {
+            maxDist[i] = result;
+            cout << "Max:" << maxDist[i] << " - " << (*iter)->val << endl;
+        }
+    }
+
+    return true;
+}

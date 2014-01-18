@@ -2,7 +2,6 @@
 #include <cstdlib>
 
 #include "Utils.h"
-#include "heap.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -20,25 +19,20 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-//    charMap map;
-//    if(!map.fillMapFromFile(argv[1]))
-//    {
-//        cerr << "Cannot load map!" << endl;
-//        return -1;
-//    }
-//    map.printMap();
-//
-//    cout << endl;
-//
-//    Graph<LinkedList<dot> > gr;
-//    fromBoolMapToGraph(map, gr);
-//    gr.print();
-    Heap<int> hp;
-    for(int i = 30; i > 0; --i)
-        hp.Push(i,i);
+    charMap map;
+    if(!map.fillMapFromFile(argv[1]))
+    {
+        cerr << "Cannot load map!" << endl;
+        return -1;
+    }
+    map.printMap();
+    cout << endl;
 
-    while(!hp.IsEmpty())
-        cout << hp.Pop() << endl;
+    Graph<LinkedList<dot> > gr;
+    fromBoolMapToGraph(map, gr);
+    //gr.print();
+
+    findBestNodes(gr);
 
     return 0;
 }
